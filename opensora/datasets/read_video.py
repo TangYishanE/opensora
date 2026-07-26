@@ -11,7 +11,13 @@ import cv2
 import numpy as np
 import torch
 from torchvision import get_video_backend
-from torchvision.io.video import _check_av_available
+
+def _check_av_available():
+    # torchvision.io.video was removed in torchvision 0.26 (torch 2.11); `av`
+    # is imported above, so just verify it's importable.
+    if av is None:
+        raise ImportError("PyAV is required to read videos but is not installed.")
+
 
 MAX_NUM_FRAMES = 2500
 

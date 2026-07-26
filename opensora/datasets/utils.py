@@ -9,10 +9,22 @@ import torchvision
 import torchvision.transforms as transforms
 from PIL import Image
 from torchvision.datasets.folder import IMG_EXTENSIONS, pil_loader
-from torchvision.io import write_video
 from torchvision.utils import save_image
 
 from . import video_transforms
+
+def write_video(filename, video_array, fps, video_codec="libx264", options=None):
+    # torchvision.io.write_video was removed in torchvision 0.26 (torch 2.11);
+    # reimplement with imageio[ffmpeg] (an embodied dependency). video_array is
+    # a [T, H, W, C] uint8 tensor/array.
+    import imageio
+    import numpy as _np
+
+    arr = video_array.detach().cpu().numpy() if hasattr(video_array, "detach") else _np.asarray(video_array)
+    arr = arr.astype("uint8")
+    codec = {"h264": "libx264"}.get(video_codec, video_codec)
+    imageio.mimwrite(filename, arr, fps=float(fps), codec=codec, macro_block_size=None)
+
 
 VID_EXTENSIONS = (".mp4", ".avi", ".mov", ".mkv")
 
