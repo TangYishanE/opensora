@@ -149,7 +149,12 @@ def read_image_from_path(path, transform=None, transform_name="center", num_fram
 
 
 def read_video_from_path(path, transform=None, transform_name="center", image_size=(256, 256)):
-    vframes, aframes, info = torchvision.io.read_video(filename=path, pts_unit="sec", output_format="TCHW")
+    # torchvision.io.read_video went away in torchvision 0.26 along with
+    # write_video; read_video_av is this package's own PyAV implementation of
+    # the same call.
+    from .read_video import read_video_av
+
+    vframes, aframes, info = read_video_av(filename=path, pts_unit="sec", output_format="TCHW")
     if transform is None:
         transform = get_transforms_video(image_size=image_size, name=transform_name)
     video = transform(vframes)  # T C H W
