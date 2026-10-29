@@ -1,0 +1,52 @@
+{
+  "episodes": [
+    {
+      "episode_id": "arx_x5_demo_0",
+      "path": "/path/to/robodojo/raw/episode_0000000.hdf5",
+      "split": "train",
+      "image_key": "vision/cam_head/colors",
+      "action_key": {
+        "keys": [
+          "state/left_arm_joint_states",
+          "state/right_arm_joint_states",
+          "state/left_ee_joint_states",
+          "state/right_ee_joint_states"
+        ],
+        "order": "native"
+      },
+      "action_order": "aloha",
+      "action_representation": "absolute_joint",
+      "action_source": "state_target",
+      "alignment": "incoming",
+      "color_order": "rgb",
+      "control_hz": 25,
+      "instruction": "Stack the three bowls together.",
+      "source_revision": "269457a3b42d8d0ae69898a601f2c1487c2f826e",
+      "embodiment": "arx_x5"
+    },
+    {
+      "episode_id": "arx_x5_demo_1",
+      "path": "/path/to/robodojo/raw/episode_0000001.hdf5",
+      "split": "test",
+      "image_key": "vision/cam_head/colors",
+      "action_key": {
+        "keys": [
+          "state/left_arm_joint_states",
+          "state/right_arm_joint_states",
+          "state/left_ee_joint_states",
+          "state/right_ee_joint_states"
+        ],
+        "order": "native"
+      },
+      "action_order": "aloha",
+      "action_representation": "absolute_joint",
+      "action_source": "state_target",
+      "alignment": "incoming",
+      "color_order": "rgb",
+      "control_hz": 25,
+      "instruction": "Stack the three bowls together.",
+      "source_revision": "269457a3b42d8d0ae69898a601f2c1487c2f826e",
+      "embodiment": "arx_x5"
+    }
+  ]
+}

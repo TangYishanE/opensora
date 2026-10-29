@@ -1,5 +1,7 @@
 ## Action-Conditioned OpenSora
 
+RoboTwin 数据接口、训练入口和 Docker 单元测试见 [RoboTwin 适配说明](docs/robotwin.md)。
+
 ### 项目概述
 
 本项目基于 [Open-Sora](https://github.com/hpcaitech/Open-Sora) 框架，并结合 [WMPO](https://github.com/WM-PO/WMPO) 中的相关实现进行二次开发，旨在将原本面向通用视频生成的模型，扩展为一个 **action-conditioned world model（动作条件世界模型）**。
@@ -25,3 +27,5 @@
 Open-Sora 与 WMPO 的原始版权分别归其作者所有，具体请参见对应项目中的 LICENSE 文件。
 
 ---
+
+RoboDojo 数据转换、训练入口及 RLinf 接口见 [RoboDojo 适配说明](docs/robodojo.md)。

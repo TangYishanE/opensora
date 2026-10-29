@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export WANDB_API_KEY=338a1a94f799ce9a1470532e392f97fe330af917
+# Set WANDB_API_KEY in the environment when using Weights & Biases.
 export LD_LIBRARY_PATH=/root/.tensornvme/lib:$LD_LIBRARY_PATH
 
 # bs=1 时，多卡并行没有用

@@ -1,5 +1,4 @@
 import os
-import random
 import numpy as np
 import torch
 import torch.distributed as dist
@@ -7,6 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from einops import rearrange
 from rotary_embedding_torch import RotaryEmbedding
+from opensora.action_encoder import ActionEncoder
 from timm.models.layers import DropPath
 from timm.models.vision_transformer import Mlp
 from transformers import PretrainedConfig, PreTrainedModel
@@ -32,44 +32,6 @@ from opensora.models.layers.blocks import (
 )
 from opensora.registry import MODELS
 from opensora.utils.ckpt_utils import load_checkpoint
-
-
-class ActionEncoder(nn.Module):
-    def __init__(self, hidden_size, action_dim, cfg=False, training=False, pad_action_num = 1):
-        """
-        初始化ActionEncoder
-        :param embedding_dim: 每个整数的嵌入维度
-        :param output_dim: 最终输出的向量表征维度
-        """
-        super(ActionEncoder, self).__init__()
-        self.action_dim = action_dim
-        self.fc = nn.Sequential(
-            nn.Linear(self.action_dim, hidden_size*4),
-            nn.SiLU(),
-            nn.Linear(hidden_size*4, hidden_size)
-        )
-        self.hidden_size = hidden_size 
-        self.cfg = cfg
-        self.training = training
-        self.none_action = nn.Embedding(1, hidden_size)
-        self.pad_action_num = pad_action_num
-    
-    def forward(self, x):
-        batch_size, action_num, action_dim  = x.size()
-        x = x.reshape(-1, action_dim)
-        output = self.fc(x)
-
-        output = output.reshape(batch_size, action_num, self.hidden_size)
-        none_action = self.none_action.weight  # 获取权重，形状是 (1, hidden_size)
-        output = torch.cat((none_action.repeat(batch_size, self.pad_action_num, 1), output), dim=1)
-
-        if self.cfg and self.training:
-            expanded_none_action = none_action.repeat(batch_size, action_dim+1, 1) # 形状变为 (batch_size, hidden_size)
-            mask = [random.random() < 0.1 for _ in range(batch_size)]
-            mask = torch.tensor(mask).to(x.device)  # 转换为Tensor并保证在相同的设备上
-            output = torch.where(mask[:, None, None], expanded_none_action, output) # unsqueeze(1)使得mask变为 (batch_size, 1)
-        output = output.reshape(-1, self.hidden_size)
-        return output
 
 
 class STDiT3Block(nn.Module):

@@ -1,0 +1,21 @@
+{
+  "episodes": [
+    {
+      "episode_id": "place_empty_cup_train_000",
+      "path": "/data/robotwin/raw/place_empty_cup/episode0.hdf5",
+      "split": "train",
+      "image_key": "observation/head_camera/rgb",
+      "action_key": "joint_action/vector",
+      "alignment": "incoming",
+      "color_order": "rgb",
+      "control_hz": 30,
+      "instruction": "place the empty cup on the coaster",
+      "source_revision": "REPLACE_WITH_VERIFIED_COLLECTOR_REVISION",
+      "task": "place_empty_cup",
+      "embodiment": "piper",
+      "action_order": "aloha",
+      "action_representation": "absolute_joint",
+      "action_source": "state_target"
+    }
+  ]
+}

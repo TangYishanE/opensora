@@ -1,0 +1,36 @@
+benchmark: robodojo
+# Single-device world-model training; paths refer to the Docker filesystem.
+dataset:
+  manifest_path: /data/robodojo/converted/manifest.json
+  stats_path: /data/robodojo/converted/dataset_statistics.json
+  split: train
+  Ta: 8
+  To: 4
+  image_size: [256, 256]
+  action_dim: 14
+model:
+  type: STDiT3-XL/2
+  from_pretrained: null
+  qk_norm: true
+  enable_flash_attn: false
+  enable_layernorm_kernel: false
+  action_dim: 14
+  pad_action_num: 4
+  cfg: false
+  training: true
+vae:
+  type: SDXL
+  from_pretrained: /models/opensora/vae
+  micro_frame_size: 8
+  micro_batch_size: 1
+scheduler:
+  type: rflow
+  use_timestep_transform: true
+  sample_method: logit-normal
+init_checkpoint: /models/opensora/libero/model-00001.safetensors
+output_dir: /results/robodojo/put_bottles_into_dustbin/smoke
+batch_size: 1
+num_workers: 0
+max_steps: 5
+seed: 42
+lr: 0.00001

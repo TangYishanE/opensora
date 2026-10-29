@@ -1,6 +1,7 @@
-tests/
 gradio/
-docs/
+docs/*
+!docs/robotwin.md
+!docs/robodojo.md
 __pycache__/
 *.pyc
 *.pyo
